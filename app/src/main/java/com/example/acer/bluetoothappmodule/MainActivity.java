@@ -11,13 +11,14 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG="MainActivity";
 
-//    public MainActivity(){
-//        this.setTitle("Smart Remote");
-//    }
+    private static DatabaseHelper myDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDB=new DatabaseHelper(this);
+
     }
 
     public void onClickRegisterDevice(View v){
@@ -25,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"Register button pressed");
         Intent i = new Intent(this,RegisterDeviceActivity.class);
         startActivity(i);
+    }
 
-
-
+    public static DatabaseHelper getDatabaseHelper(){
+        return myDB;
     }
 }
