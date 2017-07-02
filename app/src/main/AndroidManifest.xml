@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterDeviceActivity"></activity>
+        <activity android:name=".RegisterDeviceActivity" />
+        <activity android:name=".ConnectionActivity" />
+        <activity android:name=".InstantiateDeviceActivity"></activity>
     </application>
 
 </manifest>

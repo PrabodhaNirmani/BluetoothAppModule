@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickRegisterDevice(View v){
 
         Log.d(TAG,"Register button pressed");
-        Intent i = new Intent(this,RegisterDeviceActivity.class);
+        Intent i = new Intent(this,InstantiateDeviceActivity.class);
         startActivity(i);
     }
 

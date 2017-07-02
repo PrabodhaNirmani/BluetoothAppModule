@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="smart_remote.db";
+    public static final String DATABASE_NAME="smart_remote_db";
     public static final String TABLE_NAME_1="device_table";
     public static final String COL_1_1="id";
     public static final String COL_1_2="device_name";
@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql_1="CREATE TABLE "+TABLE_NAME_1+" ("+COL_1_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+COL_1_2+" TEXT)";
         db.execSQL(sql_1);
-        String sql_2="CREATE TABLE "+TABLE_NAME_2+" ("+COL_1_1+" INTEGER, "+COL_2_1+" TEXT,"+COL_2_2+" TEXT) PRIMARY KEY("+COL_1_1+","+COL_2_1+")";
+        String sql_2="CREATE TABLE "+TABLE_NAME_2+" ("+COL_1_1+" INTEGER, "+COL_2_1+" TEXT,"+COL_2_2+" TEXT, PRIMARY KEY("+COL_1_1+","+COL_2_1+"))";
         db.execSQL(sql_2);
 
     }
@@ -57,6 +57,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getDevice(int id){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor result=db.rawQuery("SELECT * FROM "+TABLE_NAME_1+" WHERE "+COL_1_1+"="+id+"",null);
+        return result;
+    }
+
+    public int getDeviceId(){
+
+        String countQuery = "SELECT  * FROM " + TABLE_NAME_1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        cursor.close();
+        return count;
+
+    }
+
+    public Cursor getAllDevices(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor result=db.rawQuery("SELECT * FROM "+TABLE_NAME_1,null);
         return result;
     }
 

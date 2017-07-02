@@ -35,15 +35,25 @@
 </LinearLayout>
 
 
-
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Save Device"
-        android:layout_below="@+id/linearLayout"
         android:layout_alignEnd="@+id/linearLayout"
-        android:layout_marginTop="55dp" />
+        android:layout_below="@+id/linearLayout"
+        android:layout_marginTop="55dp"
+        android:layout_weight="1"
+        android:onClick="addDevice"
+        android:text="Save Device" />
+
+    <Button
+        android:id="@+id/btnNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/btnSave"
+        android:layout_below="@+id/btnSave"
+        android:layout_marginTop="12dp"
+        android:text="Next"
+        android:visibility="invisible" />
 
 </RelativeLayout>
