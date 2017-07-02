@@ -3,6 +3,7 @@ package com.example.acer.bluetoothappmodule;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,7 +37,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.device_list);
         Log.d(TAG,"before generate list content");
         generateListContent();
-        listView.setAdapter(new MyListAdapter(this,R.layout.device_list_item,this.deviceList));
+        listView.setAdapter(new MyListAdapter(this,R.layout.activity_device_item,this.deviceList));
 
 
     }
@@ -49,12 +51,17 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         else {
             Log.d(TAG,"else");
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                deviceList.add(cursor.getString(0)+cursor.getString(1));
+                deviceList.add(cursor.getString(0)+" "+cursor.getString(1));
             }
             cursor.close();
         }
 
     }
+
+    public InstantiateDeviceActivity getInstance(){
+        return this;
+    }
+
 
     public void addDevicePressed(View v){
         Intent i = new Intent(this,RegisterDeviceActivity.class);
@@ -64,6 +71,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
     private class MyListAdapter extends ArrayAdapter<String>{
 
         private int layout;
+
         public MyListAdapter(Context context, int resource, List<String> objects) {
             super(context, resource, objects);
             this.layout=resource;
@@ -76,30 +84,50 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
             if(convertView==null){
                 LayoutInflater inflater=LayoutInflater.from(getContext());
                 convertView=inflater.inflate(layout,parent,false);
-                ViewHolder viewHolder=new ViewHolder();
+                final ViewHolder viewHolder=new ViewHolder();
                 viewHolder.imageView=(ImageView)convertView.findViewById(R.id.ivDevice);
                 viewHolder.deviceName=(TextView)convertView.findViewById(R.id.tvDeviceName);
-                convertView.setTag(viewHolder);
+                viewHolder.deleteButton=(ImageButton)convertView.findViewById(R.id.btnDelete);
+                viewHolder.deleteButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        MainActivity.getDatabaseHelper().deleteDevice(viewHolder.deviceName.getText().toString());
+                        finish();
+                        startActivity(getIntent());
+                    }
 
+                });
+
+                viewHolder.deviceName.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent j = new Intent(getInstance(),InstantiateRemoteActivity.class);
+                        startActivity(j);
+                    }
+                });
+
+                viewHolder.imageView.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v){
+                        Intent j = new Intent(getInstance(),InstantiateRemoteActivity.class);
+                        startActivity(j);
+
+
+                    }
+                });
+                convertView.setTag(viewHolder);
             }
             else {
                 mainViewHolder=(ViewHolder)convertView.getTag();
                 mainViewHolder.deviceName.setText(getItem(position));
-
-
             }
             return convertView;
         }
-
-
     }
 
     public class ViewHolder{
-
         ImageView imageView;
         TextView deviceName;
-
-
+        ImageButton deleteButton;
     }
 }
-

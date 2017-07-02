@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".RegisterDeviceActivity" />
         <activity android:name=".ConnectionActivity" />
-        <activity android:name=".InstantiateDeviceActivity"></activity>
+        <activity android:name=".InstantiateDeviceActivity" />
+        <activity android:name=".DeviceItemActivity" />
+        <activity android:name=".InstantiateRemoteActivity" />
+        <activity android:name=".UpdateCommandActivity"></activity>
     </application>
 
 </manifest>

@@ -26,6 +26,7 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         next=(Button)findViewById(R.id.btnNext);
     }
 
+
     public void addDevice(View v){
         Log.d(TAG,"save button pressed");
         Log.d(TAG,deviceName.getText().toString());
@@ -37,7 +38,8 @@ public class RegisterDeviceActivity extends AppCompatActivity {
             if(inserted){
                 Toast.makeText(RegisterDeviceActivity.this,"Device registered",Toast.LENGTH_LONG).show();
                 deviceName.setText("");
-                getFragmentManager().popBackStackImmediate();
+                finish();
+                startActivity(new Intent(this, InstantiateDeviceActivity.class));
 
 
             }else {

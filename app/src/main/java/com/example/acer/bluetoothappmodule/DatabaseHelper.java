@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by acer on 7/1/2017.
@@ -68,6 +69,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int count = cursor.getCount();
         cursor.close();
         return count;
+
+    }
+
+    public void deleteDevice(String device){
+        String[] res=device.split(" ");
+        String id=res[0];
+        SQLiteDatabase db=this.getWritableDatabase();
+        int res1=db.delete(TABLE_NAME_1,"id=?",new String[]{id});
+        int res2=db.delete(TABLE_NAME_2,"id=?",new String[]{id});
+        Log.d("Tag",String.valueOf(res1)+" "+String.valueOf(res2));
 
     }
 
