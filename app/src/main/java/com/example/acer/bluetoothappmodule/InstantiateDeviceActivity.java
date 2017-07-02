@@ -101,7 +101,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                 viewHolder.deviceName.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Intent j = new Intent(getInstance(),InstantiateRemoteActivity.class);
+                        Intent j = new Intent(getInstance(),ConnectionActivity.class);
                         startActivity(j);
                     }
                 });
@@ -109,7 +109,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                 viewHolder.imageView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Intent j = new Intent(getInstance(),InstantiateRemoteActivity.class);
+                        Intent j = new Intent(getInstance(),ConnectionActivity.class);
                         startActivity(j);
 
 
