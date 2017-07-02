@@ -29,19 +29,34 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
     }
 
     public void saveIncrease(View v){
+        Intent intent = new Intent(this, TestCommandActivity.class);
+        intent.putExtra("message", "increase");
+        startActivity(intent);
 
     }
 
     public void saveDecrease(View v){
+        Intent intent = new Intent(this, TestCommandActivity.class);
+        intent.putExtra("message", "decrease");
+        startActivity(intent);
 
     }
     public void saveForward(View v){
+        Intent intent = new Intent(this, TestCommandActivity.class);
+        intent.putExtra("message", "forward");
+        startActivity(intent);
 
     }
     public void saveBackward(View v){
+        Intent intent = new Intent(this, TestCommandActivity.class);
+        intent.putExtra("message", "backward");
+        startActivity(intent);
 
     }
     public void saveOnOff(View v){
+        Intent intent = new Intent(this, TestCommandActivity.class);
+        intent.putExtra("message", "on_off");
+        startActivity(intent);
 
     }
 
