@@ -101,16 +101,18 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                 viewHolder.deviceName.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Intent j = new Intent(getInstance(),ConnectionActivity.class);
-                        startActivity(j);
+                        Intent intent = new Intent(getInstance(),ConnectionActivity.class);
+                        intent.putExtra("id", viewHolder.deviceName.getText().toString());
+                        startActivity(intent);
                     }
                 });
 
                 viewHolder.imageView.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
-                        Intent j = new Intent(getInstance(),ConnectionActivity.class);
-                        startActivity(j);
+                        Intent intent = new Intent(getInstance(),ConnectionActivity.class);
+                        intent.putExtra("id", viewHolder.deviceName.getText().toString());
+                        startActivity(intent);
 
 
                     }
