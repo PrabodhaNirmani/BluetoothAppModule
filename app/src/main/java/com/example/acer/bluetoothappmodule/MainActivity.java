@@ -24,8 +24,16 @@ public class MainActivity extends AppCompatActivity {
     public void onClickRegisterDevice(View v){
 
         Log.d(TAG,"Register button pressed");
-        Intent i = new Intent(this,InstantiateDeviceActivity.class);
-        startActivity(i);
+        Intent intent = new Intent(this,InstantiateDeviceActivity.class);
+        intent.putExtra("viewId", "0");
+        startActivity(intent);
+    }
+
+    public void onClickSelectDevice(View v){
+        Log.d(TAG,"select device button pressed");
+        Intent intent = new Intent(this,InstantiateDeviceActivity.class);
+        intent.putExtra("viewId", "1");
+        startActivity(intent);
     }
 
     public static DatabaseHelper getDatabaseHelper(){

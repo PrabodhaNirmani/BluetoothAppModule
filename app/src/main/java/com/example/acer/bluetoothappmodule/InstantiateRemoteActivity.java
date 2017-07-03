@@ -1,14 +1,17 @@
 package com.example.acer.bluetoothappmodule;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class InstantiateRemoteActivity extends AppCompatActivity {
-
+    private static final String TAG="RemoteAvtivity";
     ImageButton increase;
     ImageButton decrease;
     ImageButton forward;
@@ -29,36 +32,103 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
     }
 
     public void saveIncrease(View v){
-        Intent intent = new Intent(this, TestCommandActivity.class);
-        intent.putExtra("message", "increase");
-        startActivity(intent);
+        if(ConnectionActivity.getViewId().equals("0")){
+            Intent intent = new Intent(this, TestCommandActivity.class);
+            intent.putExtra("message", "increase");
+            startActivity(intent);
+
+        }
+        else {
+            Log.d(TAG,"increase signal sent");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
+            //sending signal
+            if(cursor==null){
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+            else {
+                //do next task
+            }
+        }
+
+
 
     }
 
     public void saveDecrease(View v){
-        Intent intent = new Intent(this, TestCommandActivity.class);
-        intent.putExtra("message", "decrease");
-        startActivity(intent);
-
+        if(ConnectionActivity.getViewId().equals("0")) {
+            Intent intent = new Intent(this, TestCommandActivity.class);
+            intent.putExtra("message", "decrease");
+            startActivity(intent);
+        }
+        else {
+            Log.d(TAG,"decrease signal sent");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
+            //sending signal
+            if(cursor==null){
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+            else {
+                //do next task
+            }
+        }
     }
     public void saveForward(View v){
-        Intent intent = new Intent(this, TestCommandActivity.class);
-        intent.putExtra("message", "forward");
-        startActivity(intent);
-
+        if(ConnectionActivity.getViewId().equals("0")) {
+            Intent intent = new Intent(this, TestCommandActivity.class);
+            intent.putExtra("message", "forward");
+            startActivity(intent);
+        }
+        else {
+            Log.d(TAG,"forward signal sent");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
+         //sending signal
+            if(cursor==null){
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+            else {
+                //do next task
+            }
+        }
     }
     public void saveBackward(View v){
-        Intent intent = new Intent(this, TestCommandActivity.class);
-        intent.putExtra("message", "backward");
-        startActivity(intent);
+        if(ConnectionActivity.getViewId().equals("0")){
+            Intent intent = new Intent(this, TestCommandActivity.class);
+            intent.putExtra("message", "backward");
+            startActivity(intent);
+
+        }
+        else {
+            Log.d(TAG,"backward signal sent");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backword");
+            //sending signal
+            if(cursor==null){
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+            else {
+                //do next task
+            }
+        }
 
     }
     public void saveOnOff(View v){
-        Intent intent = new Intent(this, TestCommandActivity.class);
-        intent.putExtra("message", "on_off");
-        startActivity(intent);
+        if(ConnectionActivity.getViewId().equals("0")){
+            Intent intent = new Intent(this, TestCommandActivity.class);
+            intent.putExtra("message", "on_off");
+            startActivity(intent);
+        }
+        else {
+            //sending signal
+            Log.d(TAG,"on off signal sent");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
+            if(cursor==null){
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+            else {
+                //do next task
+            }
+        }
 
-    }
+}
 
 
 

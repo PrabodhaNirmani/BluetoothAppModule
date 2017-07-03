@@ -21,7 +21,7 @@
         <activity android:name=".InstantiateDeviceActivity" />
         <activity android:name=".DeviceItemActivity" />
         <activity android:name=".InstantiateRemoteActivity" />
-        <activity android:name=".UpdateCommandActivity" />
+        <activity android:name=".RemoteActivity" />
         <activity android:name=".TestCommandActivity"></activity>
     </application>
 

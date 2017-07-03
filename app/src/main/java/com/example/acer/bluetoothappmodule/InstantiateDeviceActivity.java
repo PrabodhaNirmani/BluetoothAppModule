@@ -29,6 +29,7 @@ import java.util.List;
 public class InstantiateDeviceActivity extends AppCompatActivity {
     private ArrayList<String> deviceList=new ArrayList<>();
     private static final String TAG="InstantiateDevices";
+    private static String viewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,8 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         Log.d(TAG,"before generate list content");
         generateListContent();
         listView.setAdapter(new MyListAdapter(this,R.layout.activity_device_item,this.deviceList));
+        Bundle bundle = getIntent().getExtras();
+        viewId = bundle.getString("viewId");
 
 
     }
@@ -102,7 +105,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         Intent intent = new Intent(getInstance(),ConnectionActivity.class);
-                        intent.putExtra("id", viewHolder.deviceName.getText().toString());
+                        intent.putExtra("id", viewHolder.deviceName.getText().toString()+" "+viewId);
                         startActivity(intent);
                     }
                 });
@@ -111,7 +114,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         Intent intent = new Intent(getInstance(),ConnectionActivity.class);
-                        intent.putExtra("id", viewHolder.deviceName.getText().toString());
+                        intent.putExtra("id", viewHolder.deviceName.getText().toString()+" "+viewId);
                         startActivity(intent);
 
 

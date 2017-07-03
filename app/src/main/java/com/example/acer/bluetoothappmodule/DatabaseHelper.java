@@ -6,20 +6,22 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by acer on 7/1/2017.
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="smart_remote_db";
-    public static final String TABLE_NAME_1="device_table";
-    public static final String COL_1_1="id";
-    public static final String COL_1_2="device_name";
+    private static final String DATABASE_NAME="smart_remote_db";
+    private static final String TABLE_NAME_1="device_table";
+    private static final String COL_1_1="id";
+    private static final String COL_1_2="device_name";
+    private static final String TAG="Database helper";
 
-    public static final String TABLE_NAME_2="command_table";
-    public static final String COL_2_1="type";
-    public static final String COL_2_2="serial_code";
+    private static final String TABLE_NAME_2="command_table";
+    private static final String COL_2_1="type";
+    private static final String COL_2_2="serial_code";
 
 
 
@@ -117,8 +119,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getCommand(String id,String type){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor result=db.rawQuery("SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_1_1+"="+id+" and "+COL_2_1+"="+type+"",null);
-        return result;
+        Log.d(TAG,id+" "+type);
+        Cursor result=null;
+        try {
+            result=db.rawQuery("SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_1_1+"="+id+" and "+COL_2_1+"="+type+"",null);
+        }catch (Exception e){
+            Log.d(TAG,"Error occured during transaction");
+//            Toast.makeText(InstantiateRemoteActivity.class,"Error occured durin transaction try again",Toast.LENGTH_LONG).show();
+        }
+        finally {
+            return result;
+        }
+
+
 
     }
 
