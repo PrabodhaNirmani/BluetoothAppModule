@@ -39,7 +39,11 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                 Toast.makeText(RegisterDeviceActivity.this,"Device registered",Toast.LENGTH_LONG).show();
                 deviceName.setText("");
                 finish();
-                startActivity(new Intent(this, InstantiateDeviceActivity.class));
+
+                Intent intent = new Intent(this,InstantiateDeviceActivity.class);
+                intent.putExtra("viewId", "0");
+                startActivity(intent);
+
 
 
             }else {

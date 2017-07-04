@@ -30,6 +30,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
     private ArrayList<String> deviceList=new ArrayList<>();
     private static final String TAG="InstantiateDevices";
     private static String viewId;
+    private ImageButton btnAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,15 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         listView.setAdapter(new MyListAdapter(this,R.layout.activity_device_item,this.deviceList));
         Bundle bundle = getIntent().getExtras();
         viewId = bundle.getString("viewId");
+        Log.d(TAG,viewId);
+        btnAdd=(ImageButton)findViewById(R.id.btnAdd);
+        if (viewId.equals("1")){
+            btnAdd.setVisibility(View.INVISIBLE);
+
+        }
+        else {
+            btnAdd.setVisibility(View.VISIBLE);
+        }
 
 
     }
