@@ -7,11 +7,77 @@
     tools:context="com.example.acer.bluetoothappmodule.ConnectionActivity">
 
     <Button
-        android:id="@+id/button"
+        android:text="ON/OFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="saveCommands"
-        android:text="Next"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="171dp" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/btnONOFF"/>
+
+    <Button
+        android:text="Enable Discoverable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnDiscoverable_on_off"
+        android:onClick="btnEnableDisable_Discoverable"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFindUnpairedDevices"
+        android:text="Discover"
+        android:onClick="btnDiscover"/>
+    <Button
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnFindUnpairedDevices"
+        android:id="@+id/btnStartConnection"
+        android:text="Start Connection"/>
+    <ListView
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/btnStartConnection"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/lvNewDevices"/>
+
+
+    <!--<EditText-->
+        <!--android:layout_width="250dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="Enter Text Here"-->
+        <!--android:layout_below="@+id/lvNewDevices"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:id="@+id/editText" />-->
+
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="SEND"-->
+        <!--android:id="@+id/btnSend"-->
+        <!--android:layout_toRightOf="@+id/editText"-->
+        <!--android:layout_below="@+id/lvNewDevices"/>-->
+
+    <!--<EditText-->
+        <!--android:id="@+id/editText2"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/btnSend"-->
+        <!--android:layout_marginTop="48dp"-->
+        <!--android:editable="true"-->
+        <!--android:ems="10"-->
+        <!--android:inputType="textPersonName"-->
+        <!--android:layout_alignEnd="@+id/btnSend"-->
+        <!--android:layout_alignParentStart="true" />-->
+
+    <!--<Button-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="saveCommands"-->
+        <!--android:text="Next"-->
+        <!--tools:layout_editor_absoluteX="173dp"-->
+        <!--tools:layout_editor_absoluteY="171dp" />-->
 </RelativeLayout>
