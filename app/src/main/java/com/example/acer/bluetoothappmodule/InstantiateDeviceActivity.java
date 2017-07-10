@@ -1,12 +1,14 @@
 package com.example.acer.bluetoothappmodule;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -16,10 +18,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -31,6 +35,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
     private static final String TAG="InstantiateDevices";
     private static String viewId;
     private ImageButton btnAdd;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +82,64 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
 
 
     public void addDevicePressed(View v){
-        Intent i = new Intent(this,RegisterDeviceActivity.class);
-        startActivity(i);
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.prompt, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                Log.d(TAG,userInput.getText().toString());
+                                if(userInput.getText().toString().equals(new String("")))
+                                    Toast.makeText(InstantiateDeviceActivity.this,"Please make sure to fill the device name field",Toast.LENGTH_LONG).show();
+                                else{
+                                    boolean inserted=MainActivity.getDatabaseHelper().insertDevice(userInput.getText().toString());
+                                    if(inserted){
+                                        Toast.makeText(InstantiateDeviceActivity.this,"Device registered",Toast.LENGTH_LONG).show();
+//                                        userInput.setText("");
+                                        Intent intent = getIntent();
+                                        finish();
+//
+
+                                        intent.putExtra("viewId", "0");
+                                        startActivity(intent);
+
+
+
+                                    }else {
+                                        Toast.makeText(InstantiateDeviceActivity.this,"Error occurred. Try again",Toast.LENGTH_LONG).show();
+
+                                    }
+                                }
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
     }
 
     private class MyListAdapter extends ArrayAdapter<String>{
@@ -105,8 +166,10 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         MainActivity.getDatabaseHelper().deleteDevice(viewHolder.deviceName.getText().toString());
+                        Intent intent=getIntent();
                         finish();
-                        startActivity(getIntent());
+                        intent.putExtra("viewId", "0");
+                        startActivity(intent);
                     }
 
                 });

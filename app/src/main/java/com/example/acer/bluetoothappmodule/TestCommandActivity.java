@@ -68,7 +68,7 @@ public class TestCommandActivity extends AppCompatActivity {
         }else {
             Log.d(TAG,4+commandType);
             command.setImageResource(ic_media_previous);
-            command.setBackgroundColor(Color.parseColor("#ffcc0000"));
+            command.setBackgroundColor(Color.BLACK);
             tvCmd.setText("Backward Channels");
 
         }

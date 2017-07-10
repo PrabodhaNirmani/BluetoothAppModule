@@ -15,7 +15,7 @@ public class ConnectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connection);
         Bundle bundle = getIntent().getExtras();
         deviceId = bundle.getString("id").split(" ")[0];
-        viewId = bundle.getString("id").split(" ")[1];
+        viewId = bundle.getString("id").split(" ")[2];
     }
 
     public void saveCommands(View v){
