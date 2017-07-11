@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -209,6 +210,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         viewId = bundle.getString("id").split(" ")[2];
         Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
         btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
+        btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         mBTDevices = new ArrayList<>();
 
@@ -268,21 +270,27 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
     public void enableDisableBT(){
         if(mBluetoothAdapter == null){
             Log.d(TAG, "enableDisableBT: Does not have BT capabilities.");
+            Toast.makeText(ConnectionActivity.this,"This device does not have bluetooth capabilities",Toast.LENGTH_LONG).show();
         }
         if(!mBluetoothAdapter.isEnabled()){
             Log.d(TAG, "enableDisableBT: enabling BT.");
+            Toast.makeText(ConnectionActivity.this,"Enabling bluetooth",Toast.LENGTH_LONG).show();
             Intent enableBTIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivity(enableBTIntent);
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mBroadcastReceiver1, BTIntent);
+            btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
         }
         if(mBluetoothAdapter.isEnabled()){
             Log.d(TAG, "enableDisableBT: disabling BT.");
+
             mBluetoothAdapter.disable();
+            Toast.makeText(ConnectionActivity.this,"Disabling bluetooth",Toast.LENGTH_LONG).show();
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mBroadcastReceiver1, BTIntent);
+            btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -307,7 +315,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             Log.d(TAG, "here");
             mBluetoothAdapter.cancelDiscovery();
             Log.d(TAG, "btnDiscover: Canceling discovery.");
-
+            Toast.makeText(ConnectionActivity.this,"Cancel bluetooth discovery ",Toast.LENGTH_LONG).show();
             //check BT permissions in manifest
             checkBTPermissions();
 
@@ -323,6 +331,8 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             mBluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
+            Toast.makeText(ConnectionActivity.this,"Turn on bluetooth discovery",Toast.LENGTH_LONG).show();
+
         }
     }
 
@@ -358,6 +368,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
         Log.d(TAG, "onItemClick: deviceName = " + deviceName);
         Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
+        Toast.makeText(ConnectionActivity.this,"Connected with " + deviceName,Toast.LENGTH_LONG).show();
 
         //create the bond.
         //NOTE: Requires API 17+? I think this is JellyBean
