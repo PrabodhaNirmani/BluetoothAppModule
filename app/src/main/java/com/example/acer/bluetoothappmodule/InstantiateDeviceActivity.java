@@ -1,5 +1,7 @@
 package com.example.acer.bluetoothappmodule;
 
+import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothClass;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,12 +45,14 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instantiate_device);
         ListView listView = (ListView) findViewById(R.id.device_list);
         Log.d(TAG,"before generate list content");
-        generateListContent();
+       //generateListContent();
         listView.setAdapter(new MyListAdapter(this,R.layout.activity_device_item,this.deviceList));
         Bundle bundle = getIntent().getExtras();
         viewId = bundle.getString("viewId");
         Log.d(TAG,viewId);
         btnAdd=(ImageButton)findViewById(R.id.btnAdd);
+
+
         if (viewId.equals("1")){
             btnAdd.setVisibility(View.INVISIBLE);
 
@@ -60,6 +64,22 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
 
     }
 
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//       // generateListContent();
+//    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        deviceList.clear();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        generateListContent();
+    }
     private void generateListContent(){
         Log.d(TAG,"inside generate list content");
         Cursor cursor=MainActivity.getDatabaseHelper().getAllDevices();
@@ -69,7 +89,11 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         else {
             Log.d(TAG,"else");
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                deviceList.add(cursor.getString(0)+" "+cursor.getString(1));
+
+                String line=cursor.getString(0)+" "+cursor.getString(1);
+
+                Log.d(TAG,line);
+                deviceList.add(line);
             }
             cursor.close();
         }
@@ -162,6 +186,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                 viewHolder.imageView=(ImageView)convertView.findViewById(R.id.ivDevice);
                 viewHolder.deviceName=(TextView)convertView.findViewById(R.id.tvDeviceName);
                 viewHolder.deleteButton=(ImageButton)convertView.findViewById(R.id.btnDelete);
+                viewHolder.deviceName.setText(deviceList.get(position));
                 viewHolder.deleteButton.setOnClickListener(new View.OnClickListener(){
                     @Override
                     public void onClick(View v){
@@ -208,4 +233,6 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         TextView deviceName;
         ImageButton deleteButton;
     }
+
+
 }

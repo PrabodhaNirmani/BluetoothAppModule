@@ -32,8 +32,9 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
     BluetoothAdapter mBluetoothAdapter;
     Button btnEnableDisable_Discoverable;
-
-    BluetoothConnectionService mBluetoothConnection;
+    Button btnDiscover;
+    Button btnONOFF;
+    static BluetoothConnectionService mBluetoothConnection;
 
     Button btnStartConnection;
 //    Button btnSend;
@@ -51,20 +52,6 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
     ListView lvNewDevices;
 
-
-
-
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_connection);
-//
-//    }
-
-    public void saveCommands(View v){
-        Intent j = new Intent(this,InstantiateRemoteActivity.class);
-        startActivity(j);
-    }
 
     public static String getDeviceId(){
         return deviceId;
@@ -87,12 +74,14 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
                 switch(state){
                     case BluetoothAdapter.STATE_OFF:
                         Log.d(TAG, "onReceive: STATE OFF");
+                        btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
                         break;
                     case BluetoothAdapter.STATE_TURNING_OFF:
                         Log.d(TAG, "mBroadcastReceiver1: STATE TURNING OFF");
                         break;
                     case BluetoothAdapter.STATE_ON:
                         Log.d(TAG, "mBroadcastReceiver1: STATE ON");
+                        btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
                         break;
                     case BluetoothAdapter.STATE_TURNING_ON:
                         Log.d(TAG, "mBroadcastReceiver1: STATE TURNING ON");
@@ -117,6 +106,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
                     //Device is in Discoverable Mode
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE:
                         Log.d(TAG, "mBroadcastReceiver2: Discoverability Enabled.");
+                        btnDiscover.setVisibility(View.VISIBLE);
                         break;
                     //Device not in discoverable mode
                     case BluetoothAdapter.SCAN_MODE_CONNECTABLE:
@@ -190,16 +180,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
 
 
-    @Override
-    protected void onDestroy() {
-        Log.d(TAG, "onDestroy: called.");
-        super.onDestroy();
-        unregisterReceiver(mBroadcastReceiver1);
-        unregisterReceiver(mBroadcastReceiver2);
-        unregisterReceiver(mBroadcastReceiver3);
-        unregisterReceiver(mBroadcastReceiver4);
-        //mBluetoothAdapter.cancelDiscovery();
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,13 +189,18 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         Bundle bundle = getIntent().getExtras();
         deviceId = bundle.getString("id").split(" ")[0];
         viewId = bundle.getString("id").split(" ")[2];
-        Button btnONOFF = (Button) findViewById(R.id.btnONOFF);
+        btnONOFF = (Button) findViewById(R.id.btnONOFF);
         btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
-        btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
-        mBTDevices = new ArrayList<>();
-
         btnStartConnection=(Button)findViewById(R.id.btnStartConnection);
+        btnDiscover=(Button)findViewById(R.id.btnFindUnpairedDevices);
+
+        mBTDevices = new ArrayList<>();
+        btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
+        btnStartConnection.setVisibility(View.INVISIBLE);
+        btnDiscover.setVisibility(View.INVISIBLE);
+
+
 //        btnSend=(Button)findViewById(R.id.btnSend);
 //        etSend=(EditText)findViewById(R.id.editText);
 //        displayText=(EditText)findViewById(R.id.editText2);
@@ -222,6 +208,12 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         //Broadcasts when bond state changes (ie:pairing)
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mBroadcastReceiver4, filter);
+
+        IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(mBroadcastReceiver1, BTIntent);
+
+        IntentFilter intentFilter = new IntentFilter(mBluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
+        registerReceiver(mBroadcastReceiver2,intentFilter);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -233,6 +225,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             public void onClick(View view) {
                 Log.d(TAG, "onClick: enabling/disabling bluetooth.");
                 enableDisableBT();
+
 
             }
         });
@@ -261,9 +254,21 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
     }
 
 
+    @Override
+    protected void onDestroy() {
+        Log.d(TAG, "onDestroy: called.");
+        super.onDestroy();
+           unregisterReceiver(mBroadcastReceiver1);
+        unregisterReceiver(mBroadcastReceiver2);
+        unregisterReceiver(mBroadcastReceiver3);
+        unregisterReceiver(mBroadcastReceiver4);
+        //mBluetoothAdapter.cancelDiscovery();
+    }
     public void startBTConnection(BluetoothDevice device,UUID uuid){
         Log.d(TAG,"startBTNConnection : initializing bluetooth connection");
         mBluetoothConnection.startClient(device,uuid);
+        Intent j = new Intent(this,InstantiateRemoteActivity.class);
+        startActivity(j);
     }
 
 
@@ -279,8 +284,9 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             startActivity(enableBTIntent);
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+
             registerReceiver(mBroadcastReceiver1, BTIntent);
-            btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
+          //  btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
         }
         if(mBluetoothAdapter.isEnabled()){
             Log.d(TAG, "enableDisableBT: disabling BT.");
@@ -290,8 +296,9 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mBroadcastReceiver1, BTIntent);
-            btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
+           // btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
         }
+
 
     }
 
@@ -306,16 +313,19 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         IntentFilter intentFilter = new IntentFilter(mBluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
         registerReceiver(mBroadcastReceiver2,intentFilter);
 
+
+
     }
 
     public void btnDiscover(View view) {
         Log.d(TAG, "btnDiscover: Looking for unpaired devices.");
-
+mBTDevices.clear();
         if(mBluetoothAdapter.isDiscovering()){
             Log.d(TAG, "here");
             mBluetoothAdapter.cancelDiscovery();
             Log.d(TAG, "btnDiscover: Canceling discovery.");
             Toast.makeText(ConnectionActivity.this,"Cancel bluetooth discovery ",Toast.LENGTH_LONG).show();
+          //  btnStartConnection.setVisibility(View.INVISIBLE);
             //check BT permissions in manifest
             checkBTPermissions();
 
@@ -331,6 +341,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             mBluetoothAdapter.startDiscovery();
             IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
             registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
+
             Toast.makeText(ConnectionActivity.this,"Turn on bluetooth discovery",Toast.LENGTH_LONG).show();
 
         }
@@ -369,7 +380,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         Log.d(TAG, "onItemClick: deviceName = " + deviceName);
         Log.d(TAG, "onItemClick: deviceAddress = " + deviceAddress);
         Toast.makeText(ConnectionActivity.this,"Connected with " + deviceName,Toast.LENGTH_LONG).show();
-
+        btnStartConnection.setVisibility(View.VISIBLE);
         //create the bond.
         //NOTE: Requires API 17+? I think this is JellyBean
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2){

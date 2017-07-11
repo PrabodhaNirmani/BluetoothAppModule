@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.nio.charset.Charset;
+
 public class InstantiateRemoteActivity extends AppCompatActivity {
     private static final String TAG="RemoteAvtivity";
     ImageButton increase;
@@ -47,6 +49,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
             }
             else {
                 //do next task
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
             }
         }
 
@@ -69,6 +74,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
             }
             else {
                 //do next task
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
             }
         }
     }
@@ -87,6 +95,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
             }
             else {
                 //do next task
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
             }
         }
     }
@@ -99,13 +110,16 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
         }
         else {
             Log.d(TAG,"backward signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backword");
+            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
             //sending signal
             if(cursor==null){
                 Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
             }
             else {
                 //do next task
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
             }
         }
 
@@ -125,6 +139,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
             }
             else {
                 //do next task
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
             }
         }
 
