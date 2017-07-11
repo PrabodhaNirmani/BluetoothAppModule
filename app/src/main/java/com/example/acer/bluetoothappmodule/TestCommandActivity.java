@@ -1,5 +1,6 @@
 package com.example.acer.bluetoothappmodule;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import java.nio.charset.Charset;
 
 import static android.R.drawable.arrow_down_float;
 import static android.R.drawable.arrow_up_float;
@@ -86,6 +89,10 @@ public class TestCommandActivity extends AppCompatActivity {
         }
         else {
             //send signal and check that
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),commandType);
+//            String signal=cursor.getString(2);
+            byte[] bytes=signal.getBytes(Charset.defaultCharset());
+            ConnectionActivity.mBluetoothConnection.write(bytes);
         }
 
     }

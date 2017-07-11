@@ -325,7 +325,7 @@ mBTDevices.clear();
             mBluetoothAdapter.cancelDiscovery();
             Log.d(TAG, "btnDiscover: Canceling discovery.");
             Toast.makeText(ConnectionActivity.this,"Cancel bluetooth discovery ",Toast.LENGTH_LONG).show();
-          //  btnStartConnection.setVisibility(View.INVISIBLE);
+
             //check BT permissions in manifest
             checkBTPermissions();
 
