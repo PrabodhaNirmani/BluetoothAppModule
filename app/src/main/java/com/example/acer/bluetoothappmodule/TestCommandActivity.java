@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,9 +24,13 @@ import static android.R.drawable.ic_media_previous;
 public class TestCommandActivity extends AppCompatActivity {
     private static final String TAG="TestCommandActivity";
     private String commandType;
+
     ImageButton command;
     TextView tvCmd;
     TextView tvSignal;
+    Button save;
+    Button update;
+
     private String saveMode;
 
     @Override
@@ -35,35 +40,49 @@ public class TestCommandActivity extends AppCompatActivity {
         command=(ImageButton)findViewById(R.id.btn_command);
         tvCmd=(TextView)findViewById(R.id.tvCmd);
         tvSignal=(TextView)findViewById(R.id.tvMsg);
+        update=(Button)findViewById(R.id.btnUpdate);
+        save=(Button)findViewById(R.id.btnSave);
+
+
         Log.d(TAG,"testCom");
+        Bundle bundle = getIntent().getExtras();
+        commandType = bundle.getString("message");
+        saveMode=bundle.getString("type");
+        if(saveMode.equals("update")){
+            update.setVisibility(View.VISIBLE);
+            save.setVisibility(View.INVISIBLE);
+        }
+        else {
+            save.setVisibility(View.VISIBLE);
+            update.setVisibility(View.INVISIBLE);
+        }
         checkCommand();
 
     }
 
     private void checkCommand(){
-        Bundle bundle = getIntent().getExtras();
-        String message = bundle.getString("message");
-        this.commandType=message;
-        if(message.equals("increase")){
+
+
+        if(commandType.equals("increase")){
             Log.d(TAG,2+commandType);
             command.setImageResource(arrow_up_float);
             command.setBackgroundColor(Color.BLACK);
             tvCmd.setText("Increase Volume");
 
         }
-        else if(message.equals("decrease")){
+        else if(commandType.equals("decrease")){
             Log.d(TAG,3+commandType);
             command.setImageResource(arrow_down_float);
             command.setBackgroundColor(Color.BLACK);
             tvCmd.setText("Decrease Volume");
 
-        }else if(message.equals("on_off")){
+        }else if(commandType.equals("on_off")){
             Log.d(TAG,1+commandType);
             command.setImageResource(ic_lock_power_off);
             command.setBackgroundColor(Color.RED);
             tvCmd.setText("Turn Off/On Remote");
 
-        }else if(message.equals("forward")){
+        }else if(commandType.equals("forward")){
             Log.d(TAG,5+commandType);
             command.setImageResource(ic_media_next);
             command.setBackgroundColor(Color.BLACK);
@@ -106,6 +125,18 @@ public class TestCommandActivity extends AppCompatActivity {
         }
         else {
             MainActivity.getDatabaseHelper().insertCommand(ConnectionActivity.getDeviceId(),commandType,signal);
+        }
+
+    }
+
+    public void updateSignal(View v){
+        String signal=tvSignal.getText().toString();
+        if(signal.equals("")){
+            Toast.makeText(TestCommandActivity.this,"Please check your bluetooth connection is working",Toast.LENGTH_LONG).show();
+
+        }
+        else {
+            MainActivity.getDatabaseHelper().updateCommand(ConnectionActivity.getDeviceId(),commandType,signal);
         }
 
     }

@@ -235,7 +235,9 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         Intent intent = new Intent(getInstance(),ConnectionActivity.class);
-                        intent.putExtra("id", viewHolder.deviceName.getText().toString()+" "+viewId);
+//                        intent.putExtra("id", viewHolder.deviceName.getText().toString()+" "+viewId);
+                        intent.putExtra("id",viewId);
+                        intent.putExtra("device",viewHolder.deviceName.getText().toString());
                         startActivity(intent);
                     }
                 });
@@ -244,7 +246,8 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v){
                         Intent intent = new Intent(getInstance(),ConnectionActivity.class);
-                        intent.putExtra("id", viewHolder.deviceName.getText().toString()+" "+viewId);
+                        intent.putExtra("id",viewId);
+                        intent.putExtra("device",viewHolder.deviceName.getText().toString());
                         startActivity(intent);
 
 

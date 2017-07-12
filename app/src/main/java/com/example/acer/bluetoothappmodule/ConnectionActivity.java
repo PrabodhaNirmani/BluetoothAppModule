@@ -187,8 +187,10 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
         Bundle bundle = getIntent().getExtras();
-        deviceId = bundle.getString("id").split(" ")[0];
-        viewId = bundle.getString("id").split(" ")[2];
+        deviceId = bundle.getString("device").split(" ")[0];
+        viewId = bundle.getString("id");
+        Log.d(TAG,viewId+"  "+deviceId);
+
         btnONOFF = (Button) findViewById(R.id.btnONOFF);
         btnEnableDisable_Discoverable = (Button) findViewById(R.id.btnDiscoverable_on_off);
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);

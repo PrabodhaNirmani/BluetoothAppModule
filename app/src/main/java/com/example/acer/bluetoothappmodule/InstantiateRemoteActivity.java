@@ -201,6 +201,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
         Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
 
         if(cursor==null){
+            Log.d(TAG,ConnectionActivity.getViewId());
             if(ConnectionActivity.getViewId().equals("0")){
                 Intent intent = new Intent(this, TestCommandActivity.class);
                 intent.putExtra("message", "backward");
