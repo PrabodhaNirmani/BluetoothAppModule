@@ -148,4 +148,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
 
     }
+
+    public boolean confirmRegistration(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+
+        Cursor result=null;
+        try {
+            result=db.rawQuery("SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_1_1+"="+id+"",null);
+        }catch (Exception e){
+            Log.d(TAG,"Error occured during transaction");
+//            Toast.makeText(InstantiateRemoteActivity.class,"Error occured durin transaction try again",Toast.LENGTH_LONG).show();
+        }
+        finally {
+            return result.getCount()== 5;
+        }
+
+    }
 }

@@ -9,7 +9,7 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type name of te device : "
+        android:text="Type name of the device : "
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText

@@ -10,6 +10,7 @@ import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_instantiate_device);
         ListView listView = (ListView) findViewById(R.id.device_list);
         Log.d(TAG,"before generate list content");
-       //generateListContent();
+
         listView.setAdapter(new MyListAdapter(this,R.layout.activity_device_item,this.deviceList));
         Bundle bundle = getIntent().getExtras();
         viewId = bundle.getString("viewId");
@@ -55,10 +56,16 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
 
         if (viewId.equals("1")){
             btnAdd.setVisibility(View.INVISIBLE);
+            generateFinalizedlistItems();
+            if(deviceList.size()==0){
+                Toast.makeText(InstantiateDeviceActivity.this,"No devices registered yet. Register first",Toast.LENGTH_LONG).show();
+                finish();
+            }
 
         }
         else {
             btnAdd.setVisibility(View.VISIBLE);
+            generateListContent();
         }
 
 
@@ -75,11 +82,11 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
         deviceList.clear();
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-        generateListContent();
-    }
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        generateListContent();
+//    }
     private void generateListContent(){
         Log.d(TAG,"inside generate list content");
         Cursor cursor=MainActivity.getDatabaseHelper().getAllDevices();
@@ -94,6 +101,31 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
 
                 Log.d(TAG,line);
                 deviceList.add(line);
+            }
+            cursor.close();
+        }
+
+    }
+
+    public void generateFinalizedlistItems(){
+        Log.d(TAG,"inside generate list content");
+        Cursor cursor=MainActivity.getDatabaseHelper().getAllDevices();
+        if(cursor==null){
+            Log.d(TAG,"null");
+        }
+        else {
+            Log.d(TAG,"else");
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                String devId=cursor.getString(0);
+                String devName=cursor.getString(1);
+                String line=devId+" "+devName;
+                boolean finished=MainActivity.getDatabaseHelper().confirmRegistration(devId);
+                if(finished){
+                    Log.d(TAG,line);
+                    deviceList.add(line);
+                }
+
+
             }
             cursor.close();
         }

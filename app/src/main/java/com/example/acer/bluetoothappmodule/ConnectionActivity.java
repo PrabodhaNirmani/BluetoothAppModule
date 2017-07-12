@@ -196,9 +196,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         btnDiscover=(Button)findViewById(R.id.btnFindUnpairedDevices);
 
         mBTDevices = new ArrayList<>();
-        btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
-        btnStartConnection.setVisibility(View.INVISIBLE);
-        btnDiscover.setVisibility(View.INVISIBLE);
+
 
 
 //        btnSend=(Button)findViewById(R.id.btnSend);
@@ -214,6 +212,9 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
         IntentFilter intentFilter = new IntentFilter(mBluetoothAdapter.ACTION_SCAN_MODE_CHANGED);
         registerReceiver(mBroadcastReceiver2,intentFilter);
+
+        IntentFilter discoverDevicesIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(mBroadcastReceiver3, discoverDevicesIntent);
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
@@ -243,7 +244,15 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 //            }
 //        });
 
+        if(!mBluetoothAdapter.isEnabled()){
+            btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
+        }
+        else {
+            btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
+        }
 
+        btnStartConnection.setVisibility(View.INVISIBLE);
+        btnDiscover.setVisibility(View.INVISIBLE);
     }
 
     public void startConnection(){
@@ -258,10 +267,13 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
     protected void onDestroy() {
         Log.d(TAG, "onDestroy: called.");
         super.onDestroy();
-           unregisterReceiver(mBroadcastReceiver1);
+
+        unregisterReceiver(mBroadcastReceiver1);
         unregisterReceiver(mBroadcastReceiver2);
         unregisterReceiver(mBroadcastReceiver3);
         unregisterReceiver(mBroadcastReceiver4);
+
+
         //mBluetoothAdapter.cancelDiscovery();
     }
     public void startBTConnection(BluetoothDevice device,UUID uuid){
@@ -387,7 +399,7 @@ mBTDevices.clear();
             Log.d(TAG, "Trying to pair with " + deviceName);
             mBTDevices.get(i).createBond();
             mBTDevice=mBTDevices.get(i);
-            mBluetoothConnection=new BluetoothConnectionService();
+            mBluetoothConnection=new BluetoothConnectionService(ConnectionActivity.this);
         }
     }
 
