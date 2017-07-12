@@ -56,5 +56,14 @@
         android:layout_marginStart="19dp"
         android:layout_toEndOf="@+id/btnTest"
         android:onClick="saveSignal"
-        android:text="Save" />
+        android:text="Save signal" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save changes"
+        android:layout_alignBaseline="@+id/btnSave"
+        android:layout_alignBottom="@+id/btnSave"
+        android:layout_alignStart="@+id/btnSave" />
 </RelativeLayout>

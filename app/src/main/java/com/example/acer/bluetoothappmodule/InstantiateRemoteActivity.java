@@ -34,118 +34,276 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
     }
 
     public void saveIncrease(View v){
-        if(ConnectionActivity.getViewId().equals("0")){
-            Intent intent = new Intent(this, TestCommandActivity.class);
-            intent.putExtra("message", "increase");
-            startActivity(intent);
+        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
+
+        if(cursor==null){
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "increase");
+                intent.putExtra("type","insert");
+                startActivity(intent);
+
+            }
+            else {
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
 
         }
         else {
-            Log.d(TAG,"increase signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
-            //sending signal
-            if(cursor==null){
-                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            //do next task
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "increase");
+                intent.putExtra("type","update");
+                startActivity(intent);
+
             }
             else {
-                //do next task
                 String signal=cursor.getString(2);
                 byte[] bytes=signal.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
+
         }
+//        if(ConnectionActivity.getViewId().equals("0")){
+//
+//            Intent intent = new Intent(this, TestCommandActivity.class);
+//            intent.putExtra("message", "increase");
+//            intent.putExtra("type","update");
+//            intent.putExtra("type","insert");
+//            startActivity(intent);
+//
+//        }
+//        else {
+//            Log.d(TAG,"increase signal sent");
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
+//            //sending signal
+//            if(cursor==null){
+//                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                //do next task
+//                String signal=cursor.getString(2);
+//                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+//                ConnectionActivity.mBluetoothConnection.write(bytes);
+//            }
+//        }
 
 
 
     }
 
     public void saveDecrease(View v){
-        if(ConnectionActivity.getViewId().equals("0")) {
-            Intent intent = new Intent(this, TestCommandActivity.class);
-            intent.putExtra("message", "decrease");
-            startActivity(intent);
-        }
-        else {
-            Log.d(TAG,"decrease signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
-            //sending signal
-            if(cursor==null){
-                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
+
+        if(cursor==null){
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "decrease");
+                intent.putExtra("type","insert");
+                startActivity(intent);
+
             }
             else {
-                //do next task
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
-                ConnectionActivity.mBluetoothConnection.write(bytes);
-            }
-        }
-    }
-    public void saveForward(View v){
-        if(ConnectionActivity.getViewId().equals("0")) {
-            Intent intent = new Intent(this, TestCommandActivity.class);
-            intent.putExtra("message", "forward");
-            startActivity(intent);
-        }
-        else {
-            Log.d(TAG,"forward signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
-         //sending signal
-            if(cursor==null){
                 Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
             }
-            else {
-                //do next task
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
-                ConnectionActivity.mBluetoothConnection.write(bytes);
-            }
-        }
-    }
-    public void saveBackward(View v){
-        if(ConnectionActivity.getViewId().equals("0")){
-            Intent intent = new Intent(this, TestCommandActivity.class);
-            intent.putExtra("message", "backward");
-            startActivity(intent);
 
         }
         else {
-            Log.d(TAG,"backward signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
-            //sending signal
-            if(cursor==null){
-                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            //do next task
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "decrease");
+                intent.putExtra("type","update");
+                startActivity(intent);
+
             }
             else {
-                //do next task
                 String signal=cursor.getString(2);
                 byte[] bytes=signal.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
+
         }
+//        if(ConnectionActivity.getViewId().equals("0")) {
+//            Intent intent = new Intent(this, TestCommandActivity.class);
+//            intent.putExtra("message", "decrease");
+//            startActivity(intent);
+//        }
+//        else {
+//            Log.d(TAG,"decrease signal sent");
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
+//            //sending signal
+//            if(cursor==null){
+//                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                //do next task
+//                String signal=cursor.getString(2);
+//                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+//                ConnectionActivity.mBluetoothConnection.write(bytes);
+//            }
+//        }
+    }
+    public void saveForward(View v){
+        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
+
+        if(cursor==null){
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "forward");
+                intent.putExtra("type","insert");
+                startActivity(intent);
+
+            }
+            else {
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+
+        }
+        else {
+            //do next task
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "forward");
+                intent.putExtra("type","update");
+                startActivity(intent);
+
+            }
+            else {
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
+            }
+
+        }
+//        if(ConnectionActivity.getViewId().equals("0")) {
+//            Intent intent = new Intent(this, TestCommandActivity.class);
+//            intent.putExtra("message", "forward");
+//            startActivity(intent);
+//        }
+//        else {
+//            Log.d(TAG,"forward signal sent");
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
+//         //sending signal
+//            if(cursor==null){
+//                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                //do next task
+//                String signal=cursor.getString(2);
+//                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+//                ConnectionActivity.mBluetoothConnection.write(bytes);
+//            }
+//        }
+    }
+    public void saveBackward(View v){
+        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
+
+        if(cursor==null){
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "backward");
+                intent.putExtra("type","insert");
+                startActivity(intent);
+
+            }
+            else {
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+
+        }
+        else {
+            //do next task
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "backward");
+                intent.putExtra("type","update");
+                startActivity(intent);
+
+            }
+            else {
+                String signal=cursor.getString(2);
+                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+                ConnectionActivity.mBluetoothConnection.write(bytes);
+            }
+
+        }
+//        if(ConnectionActivity.getViewId().equals("0")){
+//            Intent intent = new Intent(this, TestCommandActivity.class);
+//            intent.putExtra("message", "backward");
+//            startActivity(intent);
+//
+//        }
+//        else {
+//            Log.d(TAG,"backward signal sent");
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
+//            //sending signal
+//            if(cursor==null){
+//                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                //do next task
+//                String signal=cursor.getString(2);
+//                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+//                ConnectionActivity.mBluetoothConnection.write(bytes);
+//            }
+//        }
 
     }
     public void saveOnOff(View v){
-        if(ConnectionActivity.getViewId().equals("0")){
-            Intent intent = new Intent(this, TestCommandActivity.class);
-            intent.putExtra("message", "on_off");
-            startActivity(intent);
-        }
-        else {
-            //sending signal
-            Log.d(TAG,"on off signal sent");
-            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
-            if(cursor==null){
-                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
+
+        if(cursor==null){
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "on_off");
+                intent.putExtra("type","insert");
+                startActivity(intent);
+
             }
             else {
-                //do next task
+                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+            }
+
+        }
+        else {
+            //do next task
+            if(ConnectionActivity.getViewId().equals("0")){
+                Intent intent = new Intent(this, TestCommandActivity.class);
+                intent.putExtra("message", "on_off");
+                intent.putExtra("type","update");
+                startActivity(intent);
+
+            }
+            else {
                 String signal=cursor.getString(2);
                 byte[] bytes=signal.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
-        }
 
-}
+        }
+//        if(ConnectionActivity.getViewId().equals("0")){
+//            Intent intent = new Intent(this, TestCommandActivity.class);
+//            intent.putExtra("message", "on_off");
+//            startActivity(intent);
+//        }
+//        else {
+//            //sending signal
+//            Log.d(TAG,"on off signal sent");
+//            Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
+//            if(cursor==null){
+//                Toast.makeText(InstantiateRemoteActivity.this,"Error occurred. try again",Toast.LENGTH_LONG).show();
+//            }
+//            else {
+//                //do next task
+//                String signal=cursor.getString(2);
+//                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+//                ConnectionActivity.mBluetoothConnection.write(bytes);
+//            }
+//        }
+
+    }
 
 
 

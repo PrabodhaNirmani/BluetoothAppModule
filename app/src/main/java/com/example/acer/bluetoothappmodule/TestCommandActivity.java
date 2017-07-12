@@ -26,6 +26,7 @@ public class TestCommandActivity extends AppCompatActivity {
     ImageButton command;
     TextView tvCmd;
     TextView tvSignal;
+    private String saveMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
