@@ -250,6 +250,8 @@ public class BluetoothConnectionService {
         public void write(byte[] bytes){
             String text=new String(bytes, Charset.defaultCharset());
             Log.d(TAG,"write : writing to outputStream : "+text);
+            Log.d(TAG,"write : writing to outputStream : "+mmOutputStream);
+
             try {
 
                 mmOutputStream.write(bytes);

@@ -186,6 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            Toast.makeText(InstantiateRemoteActivity.class,"Error occured durin transaction try again",Toast.LENGTH_LONG).show();
         }
         finally {
+            Log.d(TAG,String.valueOf(result.getCount()));
             return result.getCount()== 5;
         }
 

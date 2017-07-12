@@ -125,6 +125,7 @@ public class TestCommandActivity extends AppCompatActivity {
         }
         else {
             MainActivity.getDatabaseHelper().insertCommand(ConnectionActivity.getDeviceId(),commandType,signal);
+            save.setEnabled(false);
         }
 
     }
