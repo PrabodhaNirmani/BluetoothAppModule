@@ -34,7 +34,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
     }
 
     public void saveIncrease(View v){
-        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
+        String cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"increase");
 
         if(cursor==null){
             if(ConnectionActivity.getViewId().equals("0")){
@@ -59,8 +59,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
             }
             else {
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+               // String signal=cursor.getString(3);
+
+                byte[] bytes=cursor.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
 
@@ -94,7 +95,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
     }
 
     public void saveDecrease(View v){
-        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
+        String cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"decrease");
 
         if(cursor==null){
             if(ConnectionActivity.getViewId().equals("0")){
@@ -119,8 +120,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
             }
             else {
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+               // String signal=cursor.getString(3);
+
+                byte[] bytes=cursor.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
 
@@ -146,7 +148,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 //        }
     }
     public void saveForward(View v){
-        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
+        String cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"forward");
 
         if(cursor==null){
             if(ConnectionActivity.getViewId().equals("0")){
@@ -171,8 +173,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
             }
             else {
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+               // String signal=cursor.getString(3);
+
+                byte[] bytes=cursor.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
 
@@ -198,7 +201,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 //        }
     }
     public void saveBackward(View v){
-        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
+        String cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"backward");
 
         if(cursor==null){
             Log.d(TAG,ConnectionActivity.getViewId());
@@ -224,8 +227,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
             }
             else {
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+               // String signal=cursor.getString(3);
+
+                byte[] bytes=cursor.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
 
@@ -253,7 +257,7 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
     }
     public void saveOnOff(View v){
-        Cursor cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
+        String cursor=MainActivity.getDatabaseHelper().getCommand(ConnectionActivity.getDeviceId(),"on_off");
 
         if(cursor==null){
             if(ConnectionActivity.getViewId().equals("0")){
@@ -278,8 +282,9 @@ public class InstantiateRemoteActivity extends AppCompatActivity {
 
             }
             else {
-                String signal=cursor.getString(2);
-                byte[] bytes=signal.getBytes(Charset.defaultCharset());
+               // String signal=cursor.getString(3);
+
+                byte[] bytes=cursor.getBytes(Charset.defaultCharset());
                 ConnectionActivity.mBluetoothConnection.write(bytes);
             }
 

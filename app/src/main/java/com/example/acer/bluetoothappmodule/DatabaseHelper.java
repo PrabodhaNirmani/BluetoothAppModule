@@ -13,13 +13,14 @@ import android.widget.Toast;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME="smart_remote_db";
+    private static final String DATABASE_NAME="smart_remote_database";
     private static final String TABLE_NAME_1="device_table";
     private static final String COL_1_1="id";
     private static final String COL_1_2="device_name";
     private static final String TAG="Database helper";
 
     private static final String TABLE_NAME_2="command_table";
+    private static final String COL_2_0="dev_id";
     private static final String COL_2_1="type";
     private static final String COL_2_2="serial_code";
 
@@ -34,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String sql_1="CREATE TABLE "+TABLE_NAME_1+" ("+COL_1_1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+COL_1_2+" TEXT)";
         db.execSQL(sql_1);
-        String sql_2="CREATE TABLE "+TABLE_NAME_2+" ("+COL_1_1+" INTEGER, "+COL_2_1+" TEXT,"+COL_2_2+" TEXT, PRIMARY KEY("+COL_1_1+","+COL_2_1+"))";
+        String sql_2="CREATE TABLE "+TABLE_NAME_2+" ( ID INTEGER PRIMARY KEY AUTOINCREMENT, "+COL_2_0+" INTEGER, "+COL_2_1+" TEXT,"+COL_2_2+" TEXT)";
         db.execSQL(sql_2);
 
     }
@@ -106,7 +107,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertCommand(String id,String type,String serial){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put(COL_1_1,id);
+        values.put(COL_2_0,id);
         values.put(COL_2_1,type);
         values.put(COL_2_2,serial);
         long result=db.insert(TABLE_NAME_2,null,values);
@@ -117,19 +118,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor getCommand(String id,String type){
+    public String getCommand(String id,String type){
         SQLiteDatabase db=this.getWritableDatabase();
         Log.d(TAG,id+" "+type);
         Cursor result=null;
         try {
-            result=db.rawQuery("SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_1_1+"="+id+" and "+COL_2_1+"="+type+"",null);
+//            Cursor c = db.rawQuery("SELECT * FROM tbl1 WHERE TRIM(name) = '"+name.trim()+"'", null)
+            String query="SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_2_0+"="+id+"";
+//            String query="SELECT * FROM "+TABLE_NAME_2.trim()+" WHERE "+COL_2_0.trim()+"= '"+id+"' AND "+COL_2_1.trim()+"= '"+type+"'";
+            Log.d(TAG,query);
+
+            result=db.rawQuery(query,null);
+            for(result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+                Log.d(TAG,result.getString(2));
+                if(result.getString(2).equals(type)){
+                    Log.d(TAG,"he");
+                    String signal=result.getString(3).toString();
+                    Log.d(TAG,signal);
+                    return signal;
+
+                }
+            }
+
+
         }catch (Exception e){
             Log.d(TAG,"Error occured during transaction");
+            return null;
 //            Toast.makeText(InstantiateRemoteActivity.class,"Error occured durin transaction try again",Toast.LENGTH_LONG).show();
         }
-        finally {
-            return result;
-        }
+        return null;
 
 
 
@@ -138,10 +155,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateCommand(String id,String type,String serial){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues values=new ContentValues();
-        values.put(COL_1_1,id);
+        values.put(COL_2_0,id);
         values.put(COL_2_1,type);
         values.put(COL_2_2,serial);
-        long result=db.update(TABLE_NAME_2,values,"id = ? and type = ?",new String[]{ id, type });
+        long result=db.update(TABLE_NAME_2,values,"dev_id = ? and type = ?",new String[]{ id, type });
         if(result==-1)
             return false;
         else
@@ -154,7 +171,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor result=null;
         try {
-            result=db.rawQuery("SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_1_1+"="+id+"",null);
+            String query="SELECT * FROM "+TABLE_NAME_2+" WHERE "+COL_2_0+"="+id+"";
+            Log.d(TAG,query);
+            result=db.rawQuery(query,null);
+//            for(result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+//
+//                String line=result.getString(1)+" "+result.getString(3)+" "+result.getString(2);
+//
+//                Log.d(TAG,line);
+//
+//            }
         }catch (Exception e){
             Log.d(TAG,"Error occured during transaction");
 //            Toast.makeText(InstantiateRemoteActivity.class,"Error occured durin transaction try again",Toast.LENGTH_LONG).show();

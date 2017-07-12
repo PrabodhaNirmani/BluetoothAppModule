@@ -34,6 +34,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
     Button btnEnableDisable_Discoverable;
     Button btnDiscover;
     Button btnONOFF;
+    Button next;
     static BluetoothConnectionService mBluetoothConnection;
 
     Button btnStartConnection;
@@ -196,6 +197,8 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         btnStartConnection=(Button)findViewById(R.id.btnStartConnection);
         btnDiscover=(Button)findViewById(R.id.btnFindUnpairedDevices);
+        next=(Button)findViewById(R.id.next);
+        next.setVisibility(View.INVISIBLE);
 
         mBTDevices = new ArrayList<>();
 
@@ -403,6 +406,13 @@ mBTDevices.clear();
             mBTDevice=mBTDevices.get(i);
             mBluetoothConnection=new BluetoothConnectionService(ConnectionActivity.this);
         }
+    }
+
+
+    public void saveCommands(View v){
+
+        Intent j = new Intent(this,InstantiateRemoteActivity.class);
+        startActivity(j);
     }
 
 

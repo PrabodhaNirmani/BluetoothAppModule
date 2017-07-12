@@ -27,7 +27,7 @@ public class TestCommandActivity extends AppCompatActivity {
 
     ImageButton command;
     TextView tvCmd;
-    TextView tvSignal;
+    static TextView tvSignal;
     Button save;
     Button update;
 
@@ -139,6 +139,12 @@ public class TestCommandActivity extends AppCompatActivity {
             MainActivity.getDatabaseHelper().updateCommand(ConnectionActivity.getDeviceId(),commandType,signal);
         }
 
+    }
+
+    public static void setMessage(String msg){
+        Log.d(TAG,msg);
+        tvSignal.setText(msg);
+//        displayText.setText(msg);
     }
 
 

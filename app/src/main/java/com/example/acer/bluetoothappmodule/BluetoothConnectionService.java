@@ -232,7 +232,7 @@ public class BluetoothConnectionService {
 
                         @Override
                         public void run() {
-
+                        TestCommandActivity.setMessage(incomingMsg);
 //                            mContext.setMessage(incomingMsg);
 
                         }

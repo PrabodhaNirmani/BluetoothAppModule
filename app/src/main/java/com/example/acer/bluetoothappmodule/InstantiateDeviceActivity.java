@@ -94,7 +94,7 @@ public class InstantiateDeviceActivity extends AppCompatActivity {
             Log.d(TAG,"null");
         }
         else {
-            Log.d(TAG,"else");
+           // Log.d(TAG,"else");
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
                 String line=cursor.getString(0)+" "+cursor.getString(1);
