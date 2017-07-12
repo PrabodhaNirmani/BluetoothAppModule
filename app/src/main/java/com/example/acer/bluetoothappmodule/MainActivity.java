@@ -39,4 +39,8 @@ public class MainActivity extends AppCompatActivity {
     public static DatabaseHelper getDatabaseHelper(){
         return myDB;
     }
+
+    public MainActivity getContext(){
+        return this;
+    }
 }

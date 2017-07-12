@@ -40,7 +40,8 @@ public class BluetoothConnectionService {
     private ConnectedThread mConnectedThread;
 
     public BluetoothConnectionService(){
-//        mContext=context;
+//        ConnectionActivity context=ConnectionActivity.this;
+//        mContext=ConnectionActivity.this;
 //        mainActivity=main;
         mBluetoothAdapter=BluetoothAdapter.getDefaultAdapter();
         start();
