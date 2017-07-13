@@ -12,8 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/btnONOFF"/>
-
+        android:id="@+id/btnONOFF"
+        android:layout_marginTop="10dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFindUnpairedDevices"
+        android:text="Discover"
+        android:onClick="btnDiscover"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnDiscoverable_on_off"
+        android:layout_marginTop="5dp"/>
     <Button
         android:text="Enable Discoverable"
         android:layout_width="wrap_content"
@@ -21,16 +30,13 @@
         android:id="@+id/btnDiscoverable_on_off"
         android:onClick="btnEnableDisable_Discoverable"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp"
+        />
+
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnFindUnpairedDevices"
-        android:text="Discover"
-        android:onClick="btnDiscover"/>
-    <Button
-        android:layout_marginTop="17dp"
+        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnStartConnection"
@@ -73,12 +79,5 @@
         <!--android:layout_alignEnd="@+id/btnSend"-->
         <!--android:layout_alignParentStart="true" />-->
 
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="saveCommands"
-        android:text="Next"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="171dp" />
+
 </RelativeLayout>

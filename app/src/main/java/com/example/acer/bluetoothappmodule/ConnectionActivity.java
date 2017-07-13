@@ -34,7 +34,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
     Button btnEnableDisable_Discoverable;
     Button btnDiscover;
     Button btnONOFF;
-    Button next;
+   // Button next;
     static BluetoothConnectionService mBluetoothConnection;
 
     Button btnStartConnection;
@@ -197,8 +197,8 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
         lvNewDevices = (ListView) findViewById(R.id.lvNewDevices);
         btnStartConnection=(Button)findViewById(R.id.btnStartConnection);
         btnDiscover=(Button)findViewById(R.id.btnFindUnpairedDevices);
-        next=(Button)findViewById(R.id.next);
-        next.setVisibility(View.INVISIBLE);
+      //  next=(Button)findViewById(R.id.next);
+       // next.setVisibility(View.INVISIBLE);
 
         mBTDevices = new ArrayList<>();
 
@@ -303,7 +303,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
 
             registerReceiver(mBroadcastReceiver1, BTIntent);
-          //  btnEnableDisable_Discoverable.setVisibility(View.VISIBLE);
+
         }
         if(mBluetoothAdapter.isEnabled()){
             Log.d(TAG, "enableDisableBT: disabling BT.");
@@ -313,7 +313,7 @@ public class ConnectionActivity extends AppCompatActivity implements AdapterView
 
             IntentFilter BTIntent = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
             registerReceiver(mBroadcastReceiver1, BTIntent);
-           // btnEnableDisable_Discoverable.setVisibility(View.INVISIBLE);
+
         }
 
 
