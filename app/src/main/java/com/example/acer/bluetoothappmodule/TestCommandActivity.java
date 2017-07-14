@@ -1,6 +1,6 @@
 package com.example.acer.bluetoothappmodule;
 
-import android.database.Cursor;
+
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
